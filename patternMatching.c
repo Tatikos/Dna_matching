@@ -1,8 +1,8 @@
 /**
  * @file patternMatching.c
  * @brief DNA Sequence Pattern Matching using Brute Force and Karp-Rabin algorithms
- * @author Student Name
- * @date September 2025
+ * @author George Fotiou
+ * @date 01/10/2025
  * 
  * This program implements two pattern matching algorithms for DNA sequences:
  * 1. Brute Force algorithm (-bf)
