@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['readsequence_8',['readSequence',['../patternMatching_8c.html#af3aeb5d0a1fad39fb5fca97306ee7e18',1,'patternMatching.c']]],
-  ['rehash_9',['rehash',['../patternMatching_8c.html#ade755ef7e2147fa53836e34a7d7b0074',1,'patternMatching.c']]]
+  ['patternmatching_2ec_7',['patternMatching.c',['../patternMatching_8c.html',1,'']]],
+  ['printusage_8',['printUsage',['../patternMatching_8c.html#afab1557244eb6ab3cb446f0e7cad8905',1,'patternMatching.c']]]
 ];

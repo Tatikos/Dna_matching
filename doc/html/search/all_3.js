@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['main_3',['main',['../patternMatching_8c.html#a0ddf1224851353fc92bfbff6f499fa97',1,'patternMatching.c']]],
-  ['mod_4',['MOD',['../patternMatching_8c.html#aca7d5718ab8c38506adb3bef2469b319',1,'patternMatching.c']]]
+  ['karprabinsearch_3',['karpRabinSearch',['../patternMatching_8c.html#a7f7aec21ac754f4b81cfd50552d9bd2f',1,'patternMatching.c']]]
 ];

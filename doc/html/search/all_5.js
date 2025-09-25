@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['patternmatching_2ec_6',['patternMatching.c',['../patternMatching_8c.html',1,'']]],
-  ['printusage_7',['printUsage',['../patternMatching_8c.html#afab1557244eb6ab3cb446f0e7cad8905',1,'patternMatching.c']]]
+  ['n_6',['N',['../patternMatching_8c.html#a0240ac851181b84ac374872dc5434ee4',1,'patternMatching.c']]]
 ];

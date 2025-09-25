@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>DNA Pattern Matching: Main Page</title>
+<title>DNA Pattern Matching: DNA Pattern Matching</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -61,11 +61,152 @@ $(function() {
 </iframe>
 </div>
 
-<div class="header">
+<div class="PageDoc"><div class="header">
   <div class="headertitle">
-<div class="title">DNA Pattern Matching Documentation</div>  </div>
+<div class="title">DNA Pattern Matching </div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="textblock"><h1><a class="anchor" id="intro_sec"></a>
+Introduction</h1>
+<p>This program implements two different algorithms for pattern matching in DNA sequences:</p><ul>
+<li>Brute Force algorithm</li>
+<li>Karp-Rabin algorithm</li>
+</ul>
+<p>The program is designed to efficiently search for specific DNA patterns within larger DNA sequences, which is a fundamental operation in bioinformatics applications such as gene finding, sequence alignment, and mutation detection.</p>
+<h1><a class="anchor" id="compile_sec"></a>
+Compilation</h1>
+<p>To compile the program, use: </p><div class="fragment"><div class="line">gcc -o patternMatching patternMatching.c</div>
+</div><!-- fragment --><p>For debugging, add the -g flag: </p><div class="fragment"><div class="line">gcc -g -o patternMatching patternMatching.c</div>
+</div><!-- fragment --><h1><a class="anchor" id="usage_sec"></a>
+Usage</h1>
+<p>The program is executed from the command line with the following syntax: </p><div class="fragment"><div class="line">./patternMatching -alg DNASequenceFile.txt patternFile.txt</div>
+</div><!-- fragment --><p>Where:</p><ul>
+<li><code>alg</code> can be either <code>-bf</code> for Brute Force or <code>-kr</code> for Karp-Rabin algorithm</li>
+<li><code>DNASequenceFile.txt</code> contains the DNA sequence to search in</li>
+<li><code>patternFile.txt</code> contains the pattern to search for</li>
+</ul>
+<h1><a class="anchor" id="examples_sec"></a>
+Examples</h1>
+<div class="fragment"><div class="line">./patternMatching -bf dnaSequence.txt patSequence.txt</div>
+<div class="line">./patternMatching -kr swinefluDNA.txt normal-dna.txt</div>
+</div><!-- fragment --><p>Sample output: </p><div class="fragment"><div class="line">The pattern was found: 3 times</div>
+</div><!-- fragment --><h1><a class="anchor" id="input_sec"></a>
+Input File Preparation</h1>
+<p>Create sample input files for testing:</p>
+<p><b>dnaSequence.txt</b> (main DNA sequence): </p><div class="fragment"><div class="line">ATCGATCGATCGAAGCTTAGCTTACGTACGTGCTAGCTAGATCGATCG</div>
+</div><!-- fragment --><p><b>patSequence.txt</b> (pattern to search): </p><div class="fragment"><div class="line">TACGT</div>
+</div><!-- fragment --><h1><a class="anchor" id="algorithms_sec"></a>
+Algorithms</h1>
+<h2><a class="anchor" id="bf_sec"></a>
+Brute Force Algorithm</h2>
+<p>The brute force algorithm performs an exhaustive search by comparing the pattern against every possible position in the text. For each position, it compares character by character until either a mismatch is found or the entire pattern is matched.</p>
+<p><b>Advantages:</b></p><ul>
+<li>Simple to implement and understand</li>
+<li>No preprocessing required</li>
+<li>Works well for small patterns</li>
+</ul>
+<p><b>Disadvantages:</b></p><ul>
+<li>Inefficient for large texts and patterns</li>
+</ul>
+<p>Time Complexity: O(n*m) where n is the text length and m is the pattern length. Space Complexity: O(1)</p>
+<h2><a class="anchor" id="kr_sec"></a>
+Karp-Rabin Algorithm</h2>
+<p>The Karp-Rabin algorithm uses a rolling hash function to efficiently compare the pattern with substrings of the text. It consists of two phases:</p>
+<ol type="1">
+<li><b>Preprocessing:</b> Calculate hash value of the pattern</li>
+<li><b>Execution:</b> Calculate hash values of text substrings and compare with pattern hash</li>
+</ol>
+<p>The hash function used is: </p><div class="fragment"><div class="line">hash(s) = (s[0]*2^(m-1) + s[1]*2^(m-2) + ... + s[m-1]*2^0) mod INT_MAX</div>
+</div><!-- fragment --><p>For rolling hash calculation: </p><div class="fragment"><div class="line"><a class="code" href="patternMatching_8c.html#ade755ef7e2147fa53836e34a7d7b0074">rehash</a>(old_char, old_hash, new_char) = ((old_hash - old_char*2^(m-1)) * 2 + new_char) mod INT_MAX</div>
+<div class="ttc" id="apatternMatching_8c_html_ade755ef7e2147fa53836e34a7d7b0074"><div class="ttname"><a href="patternMatching_8c.html#ade755ef7e2147fa53836e34a7d7b0074">rehash</a></div><div class="ttdeci">long long rehash(char oldChar, long long oldHash, char newChar, int patternLen)</div><div class="ttdoc">Recalculates hash value by removing old character and adding new one.</div><div class="ttdef"><b>Definition:</b> patternMatching.c:123</div></div>
+</div><!-- fragment --><p><b>Advantages:</b></p><ul>
+<li>Efficient average-case performance</li>
+<li>Good for multiple pattern searches</li>
+</ul>
+<p><b>Disadvantages:</b></p><ul>
+<li>Hash collisions can occur</li>
+<li>Requires additional verification step</li>
+</ul>
+<p>Time Complexity: Average O(n+m), Worst case O(n*m) Space Complexity: O(1)</p>
+<h1><a class="anchor" id="performance_sec"></a>
+Performance Comparison</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Algorithm   </th><th class="markdownTableHeadNone">Best Case   </th><th class="markdownTableHeadNone">Average Case   </th><th class="markdownTableHeadNone">Worst Case   </th><th class="markdownTableHeadNone">Space    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Brute Force   </td><td class="markdownTableBodyNone">O(n)   </td><td class="markdownTableBodyNone">O(n*m)   </td><td class="markdownTableBodyNone">O(n*m)   </td><td class="markdownTableBodyNone">O(1)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Karp-Rabin   </td><td class="markdownTableBodyNone">O(n+m)   </td><td class="markdownTableBodyNone">O(n+m)   </td><td class="markdownTableBodyNone">O(n*m)   </td><td class="markdownTableBodyNone">O(1)   </td></tr>
+</table>
+<p>The Karp-Rabin algorithm generally performs better on larger datasets, while Brute Force may be sufficient for smaller sequences.</p>
+<h1><a class="anchor" id="files_sec"></a>
+File Format</h1>
+<p>Input files should contain DNA sequences on a single line, consisting only of the characters A, T, C, G (case insensitive). The program automatically converts lowercase letters to uppercase.</p>
+<p><b>Valid characters:</b> A, T, C, G, a, t, c, g <b>Invalid characters:</b> Any other characters are ignored</p>
+<h1><a class="anchor" id="error_handling_sec"></a>
+Error Handling</h1>
+<p>The program handles various error conditions:</p><ul>
+<li>Invalid command line arguments</li>
+<li>File not found or cannot be opened</li>
+<li>Memory allocation failures</li>
+<li>Empty patterns</li>
+<li>Sequences exceeding maximum size</li>
+</ul>
+<h1><a class="anchor" id="limitations_sec"></a>
+Limitations</h1>
+<ul>
+<li>Maximum sequence length: 512,000 characters (defined by N constant)</li>
+<li>Only supports standard DNA nucleotides (A, T, C, G)</li>
+<li>Input files should have sequences on a single line</li>
+<li>Hash collisions in Karp-Rabin may cause slight performance degradation</li>
+</ul>
+<h1><a class="anchor" id="testing_sec"></a>
+Testing</h1>
+<p>To test the program:</p><ol type="1">
+<li>Create sample DNA sequence and pattern files</li>
+<li>Run both algorithms on the same input</li>
+<li>Verify that both produce identical results</li>
+<li>Test with various pattern sizes and DNA sequences</li>
+</ol>
+<h1><a class="anchor" id="troubleshooting_sec"></a>
+Troubleshooting</h1>
+<p><b>Common Issues:</b></p><ul>
+<li>"Cannot open file": Check file paths and permissions</li>
+<li>"Memory allocation failed": Reduce sequence size or increase available memory</li>
+<li>"Invalid algorithm": Use exactly <code>-bf</code> or <code>-kr</code> (case sensitive)</li>
+<li>Different results between algorithms: Report as potential bug</li>
+</ul>
+<h1><a class="anchor" id="functions_sec"></a>
+Key Functions</h1>
+<ul>
+<li><code><a class="el" href="patternMatching_8c.html#af3aeb5d0a1fad39fb5fca97306ee7e18" title="Reads a DNA sequence from a file into a character array.">readSequence()</a></code>: Reads DNA sequences from files</li>
+<li><code><a class="el" href="patternMatching_8c.html#a914c5ad4bbb20517daa9d0d64ec3a892" title="Implements brute force pattern matching algorithm.">bruteForceSearch()</a></code>: Implements brute force pattern matching</li>
+<li><code><a class="el" href="patternMatching_8c.html#a7f7aec21ac754f4b81cfd50552d9bd2f" title="Implements Karp-Rabin pattern matching algorithm.">karpRabinSearch()</a></code>: Implements Karp-Rabin pattern matching</li>
+<li><code><a class="el" href="patternMatching_8c.html#a7e104634b756ab81be900a39d358bdc2" title="Calculates hash value for a string using rolling hash.">calculateHash()</a></code>: Computes hash values for strings</li>
+<li><code><a class="el" href="patternMatching_8c.html#ade755ef7e2147fa53836e34a7d7b0074" title="Recalculates hash value by removing old character and adding new one.">rehash()</a></code>: Updates hash values using rolling hash</li>
+<li><code><a class="el" href="patternMatching_8c.html#a7a7c80ec3be1743084c7aef84774f629" title="Verifies if pattern actually matches at given position.">verifyMatch()</a></code>: Confirms actual pattern matches</li>
+</ul>
+<h1><a class="anchor" id="author_sec"></a>
+Author Information</h1>
+<ul>
+<li><b>Author:</b> George Fotiou</li>
+<li><b>Course:</b> EPL232 - Programming Techniques and Tools</li>
+<li><b>Department:</b> Computer Science, University of Cyprus</li>
+<li><b>Assignment:</b> 1 - DNA Sequence Processing and Applications</li>
+<li><b>Semester:</b> Fall 2025</li>
+<li><b>Date:</b> 01/10/2025</li>
+</ul>
+<h1><a class="anchor" id="notes_sec"></a>
+Implementation Notes</h1>
+<ul>
+<li>The program uses dynamic memory allocation for sequences</li>
+<li>Proper error handling for file operations and memory allocation</li>
+<li>Hash collision handling in Karp-Rabin through character-by-character verification</li>
+<li>Modular design with separate functions for each algorithm</li>
+<li>Comprehensive documentation using Doxygen format</li>
+<li>Case-insensitive input processing with automatic uppercase conversion </li>
+</ul>
+</div></div><!-- PageDoc -->
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

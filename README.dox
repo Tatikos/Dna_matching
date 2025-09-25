@@ -1,0 +1,190 @@
+/**
+ * @mainpage DNA Pattern Matching
+ * 
+ * @section intro_sec Introduction
+ * 
+ * This program implements two different algorithms for pattern matching in DNA sequences:
+ * - Brute Force algorithm
+ * - Karp-Rabin algorithm
+ * 
+ * The program is designed to efficiently search for specific DNA patterns within larger
+ * DNA sequences, which is a fundamental operation in bioinformatics applications such as
+ * gene finding, sequence alignment, and mutation detection.
+ * 
+ * @section compile_sec Compilation
+ * 
+ * To compile the program, use:
+ * ```
+ * gcc -o patternMatching patternMatching.c
+ * ```
+ * 
+ * For debugging, add the -g flag:
+ * ```
+ * gcc -g -o patternMatching patternMatching.c
+ * ```
+ * 
+ * @section usage_sec Usage
+ * 
+ * The program is executed from the command line with the following syntax:
+ * ```
+ * ./patternMatching -alg DNASequenceFile.txt patternFile.txt
+ * ```
+ * 
+ * Where:
+ * - `alg` can be either `-bf` for Brute Force or `-kr` for Karp-Rabin algorithm
+ * - `DNASequenceFile.txt` contains the DNA sequence to search in
+ * - `patternFile.txt` contains the pattern to search for
+ * 
+ * @section examples_sec Examples
+ * 
+ * ```
+ * ./patternMatching -bf dnaSequence.txt patSequence.txt
+ * ./patternMatching -kr swinefluDNA.txt normal-dna.txt
+ * ```
+ * 
+ * Sample output:
+ * ```
+ * The pattern was found: 3 times
+ * ```
+ * 
+ * @section input_sec Input File Preparation
+ * 
+ * Create sample input files for testing:
+ * 
+ * **dnaSequence.txt** (main DNA sequence):
+ * ```
+ * ATCGATCGATCGAAGCTTAGCTTACGTACGTGCTAGCTAGATCGATCG
+ * ```
+ * 
+ * **patSequence.txt** (pattern to search):
+ * ```
+ * TACGT
+ * ```
+ * 
+ * @section algorithms_sec Algorithms
+ * 
+ * @subsection bf_sec Brute Force Algorithm
+ * 
+ * The brute force algorithm performs an exhaustive search by comparing the pattern
+ * against every possible position in the text. For each position, it compares
+ * character by character until either a mismatch is found or the entire pattern
+ * is matched.
+ * 
+ * **Advantages:**
+ * - Simple to implement and understand
+ * - No preprocessing required
+ * - Works well for small patterns
+ * 
+ * **Disadvantages:**
+ * - Inefficient for large texts and patterns
+ * 
+ * Time Complexity: O(n*m) where n is the text length and m is the pattern length.
+ * Space Complexity: O(1)
+ * 
+ * @subsection kr_sec Karp-Rabin Algorithm
+ * 
+ * The Karp-Rabin algorithm uses a rolling hash function to efficiently compare
+ * the pattern with substrings of the text. It consists of two phases:
+ * 
+ * 1. **Preprocessing:** Calculate hash value of the pattern
+ * 2. **Execution:** Calculate hash values of text substrings and compare with pattern hash
+ * 
+ * The hash function used is:
+ * ```
+ * hash(s) = (s[0]*2^(m-1) + s[1]*2^(m-2) + ... + s[m-1]*2^0) mod INT_MAX
+ * ```
+ * 
+ * For rolling hash calculation:
+ * ```
+ * rehash(old_char, old_hash, new_char) = ((old_hash - old_char*2^(m-1)) * 2 + new_char) mod INT_MAX
+ * ```
+ * 
+ * **Advantages:**
+ * - Efficient average-case performance
+ * - Good for multiple pattern searches
+ * 
+ * **Disadvantages:**
+ * - Hash collisions can occur
+ * - Requires additional verification step
+ * 
+ * Time Complexity: Average O(n+m), Worst case O(n*m)
+ * Space Complexity: O(1)
+ * 
+ * @section performance_sec Performance Comparison
+ * 
+ * | Algorithm    | Best Case | Average Case | Worst Case | Space |
+ * |--------------|-----------|--------------|------------|-------|
+ * | Brute Force  | O(n)      | O(n*m)       | O(n*m)     | O(1)  |
+ * | Karp-Rabin   | O(n+m)    | O(n+m)       | O(n*m)     | O(1)  |
+ * 
+ * The Karp-Rabin algorithm generally performs better on larger datasets, while
+ * Brute Force may be sufficient for smaller sequences.
+ * 
+ * @section files_sec File Format
+ * 
+ * Input files should contain DNA sequences on a single line, consisting only of
+ * the characters A, T, C, G (case insensitive). The program automatically converts
+ * lowercase letters to uppercase.
+ * 
+ * **Valid characters:** A, T, C, G, a, t, c, g
+ * **Invalid characters:** Any other characters are ignored
+ * 
+ * @section error_handling_sec Error Handling
+ * 
+ * The program handles various error conditions:
+ * - Invalid command line arguments
+ * - File not found or cannot be opened
+ * - Memory allocation failures
+ * - Empty patterns
+ * - Sequences exceeding maximum size
+ * 
+ * @section limitations_sec Limitations
+ * 
+ * - Maximum sequence length: 512,000 characters (defined by N constant)
+ * - Only supports standard DNA nucleotides (A, T, C, G)
+ * - Input files should have sequences on a single line
+ * - Hash collisions in Karp-Rabin may cause slight performance degradation
+ * 
+ * @section testing_sec Testing
+ * 
+ * To test the program:
+ * 1. Create sample DNA sequence and pattern files
+ * 2. Run both algorithms on the same input
+ * 3. Verify that both produce identical results
+ * 4. Test with various pattern sizes and DNA sequences
+ * 
+ * @section troubleshooting_sec Troubleshooting
+ * 
+ * **Common Issues:**
+ * - "Cannot open file": Check file paths and permissions
+ * - "Memory allocation failed": Reduce sequence size or increase available memory
+ * - "Invalid algorithm": Use exactly `-bf` or `-kr` (case sensitive)
+ * - Different results between algorithms: Report as potential bug
+ * 
+ * @section functions_sec Key Functions
+ * 
+ * - `readSequence()`: Reads DNA sequences from files
+ * - `bruteForceSearch()`: Implements brute force pattern matching
+ * - `karpRabinSearch()`: Implements Karp-Rabin pattern matching
+ * - `calculateHash()`: Computes hash values for strings
+ * - `rehash()`: Updates hash values using rolling hash
+ * - `verifyMatch()`: Confirms actual pattern matches
+ * 
+ * @section author_sec Author Information
+ * 
+ * - **Author:** George Fotiou
+ * - **Course:** EPL232 - Programming Techniques and Tools
+ * - **Department:** Computer Science, University of Cyprus
+ * - **Assignment:** 1 - DNA Sequence Processing and Applications
+ * - **Semester:** Fall 2025
+ * - **Date:** 01/10/2025
+ * 
+ * @section notes_sec Implementation Notes
+ * 
+ * - The program uses dynamic memory allocation for sequences
+ * - Proper error handling for file operations and memory allocation
+ * - Hash collision handling in Karp-Rabin through character-by-character verification
+ * - Modular design with separate functions for each algorithm
+ * - Comprehensive documentation using Doxygen format
+ * - Case-insensitive input processing with automatic uppercase conversion
+ */

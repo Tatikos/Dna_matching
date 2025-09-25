@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['karprabinsearch_2',['karpRabinSearch',['../patternMatching_8c.html#a7f7aec21ac754f4b81cfd50552d9bd2f',1,'patternMatching.c']]]
+  ['dna_20pattern_20matching_2',['DNA Pattern Matching',['../index.html',1,'']]]
 ];
